@@ -1,42 +1,54 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
+import { Link, graphql, StaticQuery } from "gatsby"
 import React from "react"
+import { Container } from 'semantic-ui-react'
+import styled from 'styled-components'
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
+const HeaderStyles = styled.header`
+  text-align: center;
+  background-color: #00CED1;
+  color: #fff;
+  padding: 10px 0;
+  margin-bottom: 25px;
+  -webkit-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
+  -moz-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
+  box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
 
-Header.propTypes = {
-  siteTitle: PropTypes.string,
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+`;
+
+const Header = ({ data }) => {
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+              description
+            }
+          }
+        }
+      `}
+      render={data => (
+        <HeaderStyles>
+          <Container>
+            <h1 style={{ margin: 0 }}>
+              <Link
+                to="/"
+              >
+                {data.site.siteMetadata.title}
+              </Link>
+            </h1>
+            {data.site.siteMetadata.description}
+          </Container>
+        </HeaderStyles>
+      )}
+    />
+  )
 }
 
-Header.defaultProps = {
-  siteTitle: ``,
-}
 
 export default Header
