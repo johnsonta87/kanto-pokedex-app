@@ -1,0 +1,105 @@
+@import 'variables';
+
+.pokemon-type {
+  line-height: 1;
+  color: #fff;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
+
+  span {
+    padding: 5px;
+    text-transform: capitalize;
+  }
+
+  &.bug-type {
+    span {
+      background: $bug;
+    }
+  }
+  &.grass-type {
+    span {
+      background: $grass;
+    }
+  }
+  &.poison-type {
+    span {
+      background: $poison;
+    }
+  }
+  &.psychic-type {
+    span {
+      background: $psychic;
+    }
+  }
+  &.rock-type {
+    span {
+      background: $rock;
+    }
+  }
+  &.unknown-type {
+    span {
+      background: $unknown;
+    }
+  }
+  &.fire-type {
+    span {
+      background: $fire;
+    }
+  }
+  &.water-type {
+    span {
+      background: $water;
+    }
+  }
+  &.flying-type {
+    span {
+      background: $flying;
+    }
+  }
+  &.fighting-type {
+    span {
+      background: $fighting;
+    }
+  }
+  &.electric-type {
+    span {
+      background: $electric;
+    }
+  }
+  &.ghost-type {
+    span {
+      background: $ghost;
+    }
+  }
+  &.fairy-type {
+    span {
+      background: $fairy;
+    }
+  }
+  &.normal-type {
+    span {
+      background: $normal;
+    }
+  }
+  &.ice-type {
+    span {
+      background: $ice;
+    }
+  }
+  &.dark-type {
+    span {
+      background: $dark;
+    }
+  }
+  &.dragon-type {
+    span {
+      background: $dragon;
+    }
+  }
+  &.steel-type {
+    span {
+      background: $steel;
+    }
+  }
+}

@@ -17,6 +17,10 @@ const PokemonStyles = styled.div`
       background-color: #87CEEB;
     }
   }
+
+  .message {
+    text-align: center;
+  }
 `;
 
 const PokeButtonGrid = styled.div`
@@ -47,7 +51,7 @@ const PokemonsSelector = (props) => {
 
   const fetchPokemonData = (url) => {
     if (url) {
-      axios.get(url)
+      axios.get(url || pokemonURL)
         .then(function (response) {
           console.log(response.data);
           setPokemonData(response.data);

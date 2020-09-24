@@ -1,6 +1,10 @@
 import React from 'react'
 import { Item, List } from 'semantic-ui-react'
 import styled from 'styled-components'
+import Stats from './Stats'
+import Type from './Type'
+import { removeHyphen } from '../utils/helpers'
+import AdditionalDetails from './AdditionalDetails'
 
 const SinglePokemonStyles = styled.div`
   margin-bottom: 50px;
@@ -30,34 +34,32 @@ const SinglePokemonStyles = styled.div`
 `;
 
 export default function PokemonInfo(props) {
-  const { name, sprites, types, abilities, base_experience, height, weight } = props.data;
+  const { id, name, types, abilities, base_experience, height, weight, stats } = props.data;
 
   return (
     <SinglePokemonStyles>
       <Item.Group>
         <Item>
-          <Item.Image src={sprites.front_default} size='small' alt={name} />
+          <Item.Image src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} size='small' alt={name} />
 
           <Item.Content>
             <Item.Header><h2 className="pokemon-name">{name}</h2></Item.Header>
             <Item.Meta>
-              <List horizontal>
-                {types.map((type) => <List.Item key={type.slot}>{type.type.name}</List.Item>)}
-              </List>
+              <Type types={types} />
             </Item.Meta>
             <Item.Description>
               <h4>Abilities</h4>
               <List horizontal>
-                {abilities.map((ability) => <List.Item className="abilities-slot" key={ability.slot}>{ability.ability.name.replace(/-/g, " ")}</List.Item>)}
+                {abilities.map((ability) => <List.Item className="abilities-slot" key={ability.slot}>{removeHyphen(ability.ability.name)}</List.Item>)}
               </List>
             </Item.Description>
-            <Item.Extra>Additional Details</Item.Extra>
-            <p>Height: {height}"</p>
-            <p>Weight: {weight} lbs.</p>
-            <p>Base exp: {base_experience}</p>
+            <AdditionalDetails details={{ base_experience, height, weight }} />
           </Item.Content>
         </Item>
       </Item.Group>
+
+
+      <Stats stats={stats} />
     </SinglePokemonStyles>
   )
 }
