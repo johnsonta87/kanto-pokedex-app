@@ -1,11 +1,20 @@
-import React from 'react'
-import { Progress } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Progress, Button } from 'semantic-ui-react'
 import { removeHyphen } from '../utils/helpers'
 import styled from 'styled-components'
 
 const StatsProgress = styled.div`
   margin-top: 25px;
   width: 80%;
+
+  .ui.button {
+    background: rgba(250, 128, 114, 0.4);
+    border: 2px solid #FA8072;
+
+    &:hover {
+    background: rgba(250, 128, 114, 1);
+    }
+  }
 
   .statName {
     text-transform: capitalize;
@@ -24,18 +33,25 @@ const StatsProgress = styled.div`
 `;
 
 export default function PokemonStats(props) {
+  const [show, setShow] = useState(false);
   const stats = [
     ...props.stats
   ];
 
   return (
     <StatsProgress>
-      {stats.map((stat, index) => (
-        <React.Fragment key={index}>
-          <span className="statName">{removeHyphen(stat.stat.name)}</span>
-          <Progress indicating progress='value' value={stat.base_stat} />
-        </React.Fragment>
-      ))}
+      <Button className="option-button" onClick={() => setShow(!show)}>{`${!show ? 'Base Stats' : 'Hide'}`}</Button>
+      {show ? (
+
+        stats.map((stat, index) => (
+          <div key={index}>
+            <span className="statName">{removeHyphen(stat.stat.name)}</span>
+            <Progress indicating progress='value' value={stat.base_stat} />
+
+          </div>
+        ))
+
+      ) : ''}
 
     </StatsProgress>
   )

@@ -1,35 +1,44 @@
 import React from 'react'
-import { Item, List } from 'semantic-ui-react'
+import { Container, Image, Item } from 'semantic-ui-react'
 import styled from 'styled-components'
 import Stats from './Stats'
 import Type from './Type'
-import { removeHyphen } from '../utils/helpers'
-import AdditionalDetails from './AdditionalDetails'
+import Profile from './Profile'
 
 const SinglePokemonStyles = styled.div`
-  margin-bottom: 50px;
-  padding: 25px 40px;
-  background-color: #FAF0E6;
-  width: 100%;
-  border-radius: 5px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    color: #fff;
+    padding-left: 10%;
+    padding-right: 10%;
 
-  .pokemon-name {
-    text-transform: capitalize;
+    .pokemon-name {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-transform: capitalize;
+      color: #fff;
+    }
+
+    .pokemon-id {
+      margin: 0;
+      color: #fff;
+    }
   }
+`;
 
-  h4 {
-    margin-bottom: 5px;
-  }
+const InnerPokemonInfo = styled.div`
+  max-width: 500px;
+  margin: 0 auto;
 
-  .abilities-slot {
-    text-transform: capitalize;
-    background-color: #E0FFFF;
-    padding: 5px !important;
-  }
 
-  p {
-    margin-bottom: 0;
-    line-height: 1;
+  .image {
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
   }
 `;
 
@@ -38,28 +47,26 @@ export default function PokemonInfo(props) {
 
   return (
     <SinglePokemonStyles>
-      <Item.Group>
-        <Item>
-          <Item.Image src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} size='small' alt={name} />
+      <div className={`poke-info-container ${types.map((type) => type.type.name + '-pokemon ').join('')}`}>
+        <Container>
+          <InnerPokemonInfo>
+          <Item.Header>
+            <h2 className="pokemon-name">{name}</h2>
+            <Type types={types} />
+            <h4 className="pokemon-id">{`#${id}`}</h4>
+          </Item.Header>
+          <Image src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} size='medium' centered alt={name} />
 
-          <Item.Content>
-            <Item.Header><h2 className="pokemon-name">{name}</h2></Item.Header>
-            <Item.Meta>
-              <Type types={types} />
-            </Item.Meta>
-            <Item.Description>
-              <h4>Abilities</h4>
-              <List horizontal>
-                {abilities.map((ability) => <List.Item className="abilities-slot" key={ability.slot}>{removeHyphen(ability.ability.name)}</List.Item>)}
-              </List>
-            </Item.Description>
-            <AdditionalDetails details={{ base_experience, height, weight }} />
-          </Item.Content>
-        </Item>
-      </Item.Group>
+          <div className="pokemon-tabs">
+            <Profile details={{ base_experience, height, weight, abilities }} />
+
+            <Stats stats={stats} />
+          </div>
+          </InnerPokemonInfo>
+        </Container>
+      </div>
 
 
-      <Stats stats={stats} />
     </SinglePokemonStyles>
   )
 }

@@ -32,4 +32,25 @@ export const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
   }
+
+  body {
+    background: #FFFFF0;
+  }
+
+  a {
+    color: #3CB371;
+
+    &:hover {
+      color: #78C850;
+    }
+  }
+
+  button {
+    text-transform: capitalize;
+    background-color: #ADD8E6;
+    min-width: 150px;
+    margin-bottom: 1em !important;
+    border-radius: 25px;
+    border-radius: 25px !important;
+  }
 `

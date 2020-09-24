@@ -8,7 +8,6 @@ const HeaderStyles = styled.header`
   background-color: #00CED1;
   color: #fff;
   padding: 10px 0;
-  margin-bottom: 25px;
   -webkit-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
   -moz-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
   box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
@@ -16,6 +15,10 @@ const HeaderStyles = styled.header`
   a {
     color: #fff;
     text-decoration: none;
+
+    &:hover {
+      color: #fff;
+    }
   }
 `;
 
