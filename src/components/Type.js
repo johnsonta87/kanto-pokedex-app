@@ -1,11 +1,16 @@
 import React from 'react'
 import { List } from 'semantic-ui-react'
 import { removeHyphen } from '../utils/helpers'
+import styled from 'styled-components'
 
+const TypeStyles = styled.div`
+  margin-bottom: 25px;
+`;
 
 export default function PokemonType(props) {
 
   return (
+    <TypeStyles>
       <List horizontal>
         {props.types.map((type) => (
           <List.Item
@@ -15,5 +20,6 @@ export default function PokemonType(props) {
           </List.Item>
         ))}
       </List>
+    </TypeStyles>
   )
 }

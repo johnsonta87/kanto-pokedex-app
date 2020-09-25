@@ -40,11 +40,8 @@ const PokeButtonGrid = styled.div`
   justify-content: space-evenly;
   border: 2px solid #FFE4B5;
   padding: 25px 15px;
-
-  @media (min-width: 768px) {
-    height: 500px;
-    overflow-y: scroll;
-  }
+  height: 500px;
+  overflow-y: scroll;
 `;
 
 const PokemonViewStyles = styled.div`
@@ -67,11 +64,11 @@ const PokemonsSelector = (props) => {
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonURL, setPokemonURL] = useState();
   const [pokemonData, setPokemonData] = useState(null);
-  const [pokemonEvolution, setPokemonEvolution] = useState([]);
+  const [pokemonSpecies, setPokemonSpecies] = useState([]);
 
   useEffect(() => {
     fetchAllPokemonData();
-    fetchPokemonEvolution();
+    fetchPokemonSpecies();
   })
 
   const fetchAllPokemonData = () => {
@@ -84,11 +81,11 @@ const PokemonsSelector = (props) => {
       });
   }
 
-  const fetchPokemonEvolution = (id) => {
+  const fetchPokemonSpecies = (id) => {
     if (id) {
-      axios.get(`${props.url}/evolution-chain/${id}`)
+      axios.get(`${props.url}/pokemon-species/${id}`)
         .then(function (response) {
-          setPokemonEvolution(response.data);
+          setPokemonSpecies(response.data);
         })
         .catch(function (error) {
           console.log('Sorry, Error! ' + error);
@@ -122,7 +119,7 @@ const PokemonsSelector = (props) => {
                     setPokemonData(null);
                   }}
                 >go back</Button>
-                <PokemonInfo data={pokemonData} evolution={pokemonEvolution} />
+                <PokemonInfo data={pokemonData} species={pokemonSpecies} />
               </PokemonViewStyles>
             ) : (
                 <Message>
@@ -138,7 +135,7 @@ const PokemonsSelector = (props) => {
                     onClick={() => {
                       setPokemonURL(pokemon.url);
                       fetchPokemonData(pokemon.url);
-                      fetchPokemonEvolution(i + 1);
+                      fetchPokemonSpecies(i + 1);
                     }}
                   ><img src={`https://pokeres.bastionbot.org/images/pokemon/${i + 1}.png`} alt={removeHyphen(pokemon.name)} /> {removeHyphen(pokemon.name)}
                   </Button>

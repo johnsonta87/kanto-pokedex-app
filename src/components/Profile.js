@@ -39,7 +39,12 @@ const ProfileStyles = styled.div`
 `;
 
 export default function Profile(props) {
-  const { base_experience, height, weight, abilities } = props.details;
+  const {
+    base_experience,
+    height,
+    weight,
+    abilities
+  } = props.details;
 
   return (
     <ProfileStyles>
