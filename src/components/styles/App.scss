@@ -2,16 +2,53 @@
 @import "type.scss";
 @import "infoPopOut.scss";
 
-.pokemon-tabs {
+.above-poke-tabs {
+  max-width: 600px;
+  margin: 0 auto;
+  display: block;
   position: relative;
-  top: -80px;
-  padding: 120px 25px 50px;
+  width: 100%;
+  height: 120px;
   background-color: #fff;
-  display: flex;
   -webkit-border-top-left-radius: 25px;
   -webkit-border-top-right-radius: 25px;
   -moz-border-radius-topleft: 25px;
   -moz-border-radius-topright: 25px;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
+
+  @media (max-width: 767px) {
+    max-width: 90%;
+  }
+}
+
+.pokemon-tabs-wrapper {
+  width: 100%;
+  background-color: #fff;
+}
+
+.pokemon-tabs {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0 25px 50px;
+  background-color: #fff;
+}
+
+.detail-header {
+  padding: 8px 15px;
+  color: #fff;
+  background-color: #00ced1;
+  width: 100%;
+  display: block;
+  margin-bottom: 15px;
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  -ms-border-radius: 25px;
+  -o-border-radius: 25px;
+
+  h2 {
+    font-size: 1.25rem;
+  }
 }

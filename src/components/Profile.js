@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { removeHyphen } from '../utils/helpers'
-import { Button } from 'semantic-ui-react'
 
 const ProfileStyles = styled.div`
   .profile-header {
@@ -22,7 +21,7 @@ const ProfileStyles = styled.div`
       margin-right: 3px;
     }
 
-    > span {
+    > p {
       -ms-flex-preferred-size: 30%;
       flex-basis: 30%;
       -webkit-box-flex: 1;
@@ -32,36 +31,36 @@ const ProfileStyles = styled.div`
       flex-shrink: 1;
       margin: 0 2px;
     }
+
+    .abilities-slot {
+      text-transform: capitalize;
+    }
   }
 `;
 
-export default function AdditionalDetails(props) {
-  const [show, setShow] = useState(false);
+export default function Profile(props) {
   const { base_experience, height, weight, abilities } = props.details;
 
   return (
     <ProfileStyles>
-      <Button className="option-button" onClick={() => setShow(!show)}>{`${!show ? 'Profile' : 'Hide'}`}</Button>
+      <div className="detail-header">
+        <h2>Profile</h2>
+      </div>
+      <div className="pokemon-profile-row">
+        <strong>Height:</strong> <p>{height} m</p>
+        <strong>Weight:</strong> <p>{weight} kg</p>
+      </div>
 
-      {show ? (
-        <React.Fragment>
-          <div className="pokemon-profile-row">
-            <strong>Height:</strong> <span>{height} m</span>
-            <strong>Weight:</strong> <span>{weight} kg</span>
-          </div>
+      <div className="pokemon-profile-row">
+        <strong>Base exp:</strong> <p>{base_experience}</p>
 
-          <div className="pokemon-profile-row">
-            <strong>Base exp:</strong> <span>{base_experience}</span>
-
-            <strong>Abilities:</strong>&nbsp;
-          <span className="abilities-slot">
-              {abilities.map((ability) => (
-                <React.Fragment>{`${removeHyphen(ability.ability.name)}`}</React.Fragment>
-              ))}
-            </span>
-          </div>
-        </React.Fragment>
-      ) : ''}
+        <strong>Abilities:</strong>&nbsp;
+          <p className="abilities-slot">
+          {abilities.map((ability) => (
+            <React.Fragment key={ability.slot}>{`${removeHyphen(ability.ability.name)}, `}</React.Fragment>
+          ))}
+        </p>
+      </div>
     </ProfileStyles>
   )
 }

@@ -11,7 +11,7 @@ const App = () => {
     <Layout>
       <SEO title="Hello" />
 
-      <PokemonsSelector url="https://pokeapi.co/api/v2/pokemon/" />
+      <PokemonsSelector url="https://pokeapi.co/api/v2" />
     </Layout>
   )
 }

@@ -38,6 +38,13 @@ const PokeButtonGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  border: 2px solid #FFE4B5;
+  padding: 25px 15px;
+
+  @media (min-width: 768px) {
+    height: 500px;
+    overflow-y: scroll;
+  }
 `;
 
 const PokemonViewStyles = styled.div`
@@ -47,7 +54,6 @@ const PokemonViewStyles = styled.div`
   left: 0;
   right: 0;
   height: 100%;
-  overflow: hidden;
 
   .close-view {
     margin-left: 10%;
@@ -61,13 +67,15 @@ const PokemonsSelector = (props) => {
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonURL, setPokemonURL] = useState();
   const [pokemonData, setPokemonData] = useState(null);
+  const [pokemonEvolution, setPokemonEvolution] = useState([]);
 
   useEffect(() => {
     fetchAllPokemonData();
+    fetchPokemonEvolution();
   })
 
   const fetchAllPokemonData = () => {
-    axios.get(`${props.url}?limit=151`)
+    axios.get(`${props.url}/pokemon/?limit=151`)
       .then(function (response) {
         setPokemonList(response.data.results);
       })
@@ -76,11 +84,23 @@ const PokemonsSelector = (props) => {
       });
   }
 
+  const fetchPokemonEvolution = (id) => {
+    if (id) {
+      axios.get(`${props.url}/evolution-chain/${id}`)
+        .then(function (response) {
+          setPokemonEvolution(response.data);
+        })
+        .catch(function (error) {
+          console.log('Sorry, Error! ' + error);
+        });
+    }
+  }
+
   const fetchPokemonData = (url) => {
     if (url) {
       axios.get(url || pokemonURL)
         .then(function (response) {
-          console.log(response.data);
+          console.log(url);
           setPokemonData(response.data);
         })
         .catch(function (error) {
@@ -99,10 +119,10 @@ const PokemonsSelector = (props) => {
                 <Button
                   className="close-view"
                   onClick={() => {
-                  setPokemonData(null);
+                    setPokemonData(null);
                   }}
-                  >go back</Button>
-                <PokemonInfo data={pokemonData} />
+                >go back</Button>
+                <PokemonInfo data={pokemonData} evolution={pokemonEvolution} />
               </PokemonViewStyles>
             ) : (
                 <Message>
@@ -118,6 +138,7 @@ const PokemonsSelector = (props) => {
                     onClick={() => {
                       setPokemonURL(pokemon.url);
                       fetchPokemonData(pokemon.url);
+                      fetchPokemonEvolution(i + 1);
                     }}
                   ><img src={`https://pokeres.bastionbot.org/images/pokemon/${i + 1}.png`} alt={removeHyphen(pokemon.name)} /> {removeHyphen(pokemon.name)}
                   </Button>

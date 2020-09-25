@@ -4,16 +4,16 @@ import styled from 'styled-components'
 import Stats from './Stats'
 import Type from './Type'
 import Profile from './Profile'
+import Evolution from './Evolution'
 
 const SinglePokemonStyles = styled.div`
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin: 0 auto 25px;
     color: #fff;
-    padding-left: 10%;
-    padding-right: 10%;
+    max-width: 600px;
 
     .pokemon-name {
       margin: 0;
@@ -31,14 +31,12 @@ const SinglePokemonStyles = styled.div`
 `;
 
 const InnerPokemonInfo = styled.div`
-  max-width: 500px;
-  margin: 0 auto;
-
-
   .image {
     position: relative;
     z-index: 1;
     margin: 0 auto;
+    bottom: -80px;
+    margin-top: -80px;
   }
 `;
 
@@ -48,8 +46,8 @@ export default function PokemonInfo(props) {
   return (
     <SinglePokemonStyles>
       <div className={`poke-info-container ${types.map((type) => type.type.name + '-pokemon ').join('')}`}>
-        <Container>
-          <InnerPokemonInfo>
+
+        <InnerPokemonInfo>
           <Item.Header>
             <h2 className="pokemon-name">{name}</h2>
             <Type types={types} />
@@ -57,13 +55,19 @@ export default function PokemonInfo(props) {
           </Item.Header>
           <Image src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} size='medium' centered alt={name} />
 
-          <div className="pokemon-tabs">
-            <Profile details={{ base_experience, height, weight, abilities }} />
+          <span className="above-poke-tabs"></span>
+          <div className="pokemon-tabs-wrapper">
+            <Container>
+              <div className="pokemon-tabs">
+                <Profile details={{ base_experience, height, weight, abilities }} />
 
-            <Stats stats={stats} />
+                <Stats stats={stats} />
+
+                {props.evolution.chain ? <Evolution evolution={props.evolution.chain} /> : ''}
+              </div>
+            </Container>
           </div>
-          </InnerPokemonInfo>
-        </Container>
+        </InnerPokemonInfo>
       </div>
 
 
