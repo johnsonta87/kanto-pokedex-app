@@ -5,12 +5,14 @@ import styled from 'styled-components'
 
 const HeaderStyles = styled.header`
   text-align: center;
-  background-color: #00CED1;
+  background-color: #FF1111;
   color: #fff;
   padding: 10px 0;
   -webkit-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
   -moz-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
   box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
+  position: relative;
+  z-index: 9;
 
   a {
     color: #fff;

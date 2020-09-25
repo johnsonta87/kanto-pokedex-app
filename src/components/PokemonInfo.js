@@ -5,6 +5,7 @@ import Stats from './Stats'
 import Type from './Type'
 import Profile from './Profile'
 import Species from './Species'
+import Description from './Description'
 
 const SinglePokemonStyles = styled.div`
   .header {
@@ -30,11 +31,14 @@ const SinglePokemonStyles = styled.div`
     .pokemon-id {
       margin: 0;
       color: #fff;
+      font-size: 2.5rem;
+      font-weight: bold;
     }
   }
 `;
 
 const InnerPokemonInfo = styled.div`
+  position: relative;
   .image {
     position: relative;
     z-index: 1;
@@ -49,10 +53,6 @@ export default function PokemonInfo(props) {
     id,
     name,
     types,
-    abilities,
-    base_experience,
-    height,
-    weight,
     stats
   } = props.data;
 
@@ -62,7 +62,7 @@ export default function PokemonInfo(props) {
         className={`poke-info-container ${types.map((type) => type.type.name + '-pokemon ').join('')}`}>
         <div className="types-bg">
           {types.map((type, i) => (
-            <span key={i} className={`${type.type.name}-bg`}></span>
+            <span key={i} className={`type-bg ${type.type.name}-bg`}></span>
           ))}
         </div>
         <InnerPokemonInfo>
@@ -78,8 +78,8 @@ export default function PokemonInfo(props) {
               <div className="pokemon-tabs">
                 <Type types={types} />
 
-                <Profile details={{ base_experience, height, weight, abilities }} />
-
+                <Description species={props.species} />
+                <Profile details={props.data} species={props.species} />
                 <Stats stats={stats} />
 
                 <Species species={props.species} />

@@ -46,6 +46,15 @@ export default function Profile(props) {
     abilities
   } = props.details;
 
+  const {
+    base_happiness,
+    egg_groups,
+    capture_rate,
+    growth_rate,
+    hatch_counter,
+    habitat,
+  } = props.species;
+
   return (
     <ProfileStyles>
       <div className="detail-header">
@@ -60,11 +69,23 @@ export default function Profile(props) {
         <strong>Base exp:</strong> <p>{base_experience}</p>
 
         <strong>Abilities:</strong>&nbsp;
-          <p className="abilities-slot">
-          {abilities.map((ability) => (
-            <React.Fragment key={ability.slot}>{`${removeHyphen(ability.ability.name)}, `}</React.Fragment>
-          ))}
+          <p className="abilities-slot capitalize">{`${abilities.map((ability) => removeHyphen(ability.ability.name)).join(', ')}`}
         </p>
+      </div>
+
+      <div className="pokemon-profile-row">
+        <strong>Chance to catch:</strong> <p className="capitalize">{capture_rate}%</p>
+        <strong>Habitat:</strong> <p className="capitalize">{removeHyphen(habitat.name)}</p>
+      </div>
+
+      <div className="pokemon-profile-row">
+        <strong>Base Happiness:</strong> <p>{base_happiness}%</p>
+        <strong>Growth:</strong> <p className="capitalize">{removeHyphen(growth_rate.name)}</p>
+      </div>
+
+      <div className="pokemon-profile-row">
+        <strong>Egg Groups:</strong> <p className="capitalize">{`${egg_groups.map((egg) => removeHyphen(egg.name)).join(', ')}`}</p>
+        <strong>Hatch:</strong> <p>{hatch_counter} steps</p>
       </div>
     </ProfileStyles>
   )

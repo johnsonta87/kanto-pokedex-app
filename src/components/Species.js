@@ -7,17 +7,9 @@ const SpeciesStyles = styled.div`
 
 export default function Species(props) {
   const {
-    base_happiness,
     egg_groups,
-    capture_rate,
     evolution_chain,
     evolves_from_species,
-    growth_rate,
-    habitat,
-    is_legendary,
-    is_mythical,
-    flavor_text_entries,
-    genera
   } = props.species;
 
   return (

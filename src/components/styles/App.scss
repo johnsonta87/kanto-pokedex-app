@@ -2,6 +2,14 @@
 @import "type.scss";
 @import "infoPopOut.scss";
 
+.capitalize {
+  text-transform: capitalize;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
 .above-poke-tabs {
   max-width: 600px;
   margin: 0 auto;
@@ -38,7 +46,7 @@
 .detail-header {
   padding: 8px 15px;
   color: #fff;
-  background-color: #00ced1;
+  background-color: #ff1111;
   width: 100%;
   display: block;
   margin-bottom: 15px;
