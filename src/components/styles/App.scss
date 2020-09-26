@@ -46,7 +46,6 @@
 .detail-header {
   padding: 8px 15px;
   color: #fff;
-  background-color: #ff1111;
   width: 100%;
   display: block;
   margin-bottom: 15px;
@@ -58,5 +57,26 @@
 
   h2 {
     font-size: 1.25rem;
+  }
+}
+
+.close-view {
+  top: 6%;
+  left: 10%;
+  position: absolute;
+  z-index: 1;
+  background-color: transparent !important;
+  background-image: url("../../images/arrow-left.svg") !important;
+  background-size: 50px !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  height: 40px;
+  width: 50px;
+  padding: 0;
+  max-width: 50px;
+  min-width: 50px;
+
+  @media screen and (max-width: 767px) {
+    left: 30px;
   }
 }

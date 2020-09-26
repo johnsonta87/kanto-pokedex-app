@@ -45,7 +45,7 @@ export default function Profile(props) {
   return (
     <DescriptionStyles>
       <div className="description-header">
-        {genera.filter((item) => (
+        {genera && genera.filter((item) => (
           item.language.name === 'en'
         )).map((genus, i) => (
           <p className="genus" key={i}>{genus.genus}</p>
@@ -56,7 +56,7 @@ export default function Profile(props) {
         {is_mythical ? <h4 className="isMythical">Mythical</h4> : ''}
       </div>
 
-      {flavor_text_entries.filter((item) => (
+      {flavor_text_entries && flavor_text_entries.filter((item) => (
         item.version.name === 'diamond'
       )).map((flavor_text, i) => (
         <p key={i}>{flavor_text.flavor_text}</p>

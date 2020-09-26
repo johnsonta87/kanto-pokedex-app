@@ -6,7 +6,6 @@ import styled from 'styled-components'
 const StatsProgress = styled.div`
   margin-top: 25px;
   margin-bottom: 25px;
-  max-width: 80%;
 
   .ui.button {
     background: rgba(250, 128, 114, 0.4);
@@ -17,6 +16,10 @@ const StatsProgress = styled.div`
     }
   }
 
+  .stats-container {
+    max-width: 77%;
+  }
+
   .stat-bar {
     display: flex;
   }
@@ -25,6 +28,7 @@ const StatsProgress = styled.div`
     text-transform: capitalize;
     font-weight: bold;
     flex: 0 0 30%;
+    margin-right: 10px;
 
     @media (min-width: 768px) {
       text-align: right;
@@ -54,13 +58,15 @@ export default function PokemonStats(props) {
       <div className="detail-header">
         <h2>Base stats</h2>
       </div>
-      {stats.map((stat, index) => (
-        <div key={index} className="stat-bar">
-          <span className="statName">{removeHyphen(stat.stat.name)}</span>
-          <Progress indicating progress='value' value={stat.base_stat} />
+      <div className="stats-container">
+        {stats.map((stat, index) => (
+          <div key={index} className="stat-bar">
+            <span className="statName">{removeHyphen(stat.stat.name)}</span>
+            <Progress indicating progress='value' value={stat.base_stat} />
 
-        </div>
-      ))}
+          </div>
+        ))}
+      </div>
     </StatsProgress>
   )
 }

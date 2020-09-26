@@ -52,18 +52,11 @@ const PokemonViewStyles = styled.div`
   left: 0;
   right: 0;
   height: 100%;
-
-  .close-view {
-    margin-left: 10%;
-    margin-top: 3%;
-    position: absolute;
-    z-index: 1;
-  }
 `;
 
 const PokemonsSelector = (props) => {
   const [loading, setLoading] = useState(true);
-  const [pokemonLoading, setPokemonLoading] = useState(true)
+  const [pokemonLoading, setPokemonLoading] = useState(true);
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonURL, setPokemonURL] = useState();
   const [pokemonData, setPokemonData] = useState(null);
@@ -99,7 +92,7 @@ const PokemonsSelector = (props) => {
 
   const fetchPokemonData = (url) => {
     if (url) {
-      axios.get(url)
+      axios.get(url || pokemonURL)
         .then(function (response) {
           setPokemonLoading(false);
           setPokemonData(response.data);
@@ -122,13 +115,11 @@ const PokemonsSelector = (props) => {
                   onClick={() => {
                     setPokemonData(null);
                   }}
-                >go back</Button>
-                {pokemonLoading ?
-                  <Dimmer active inverted>
-                    <Loader inverted>Loading</Loader>
-                  </Dimmer>
-                  : <PokemonInfo data={pokemonData} species={pokemonSpecies} />
-                }
+                  title="Go back"
+                ></Button>
+                {pokemonLoading ? <Dimmer active inverted><Loader inverted>Loading</Loader></Dimmer> : (
+                  <PokemonInfo data={pokemonData} species={pokemonSpecies} loading={pokemonLoading} />
+                )}
               </PokemonViewStyles>
             )}
 

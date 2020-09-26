@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Image, Item } from 'semantic-ui-react'
+import { Container, Image, Item, Dimmer, Loader } from 'semantic-ui-react'
 import styled from 'styled-components'
 import Stats from './Stats'
 import Type from './Type'
@@ -66,26 +66,30 @@ export default function PokemonInfo(props) {
           ))}
         </div>
         <InnerPokemonInfo>
-          <Item.Header>
-            <h2 className="pokemon-name">{name}</h2>
-            <h4 className="pokemon-id">{`#${id}`}</h4>
-          </Item.Header>
-          <Image src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} size='medium' centered alt={name} />
+          {!props.species ? <Dimmer active inverted><Loader inverted>Loading</Loader></Dimmer> : (
+            <React.Fragment>
+              <Item.Header>
+                <h2 className="pokemon-name">{name}</h2>
+                <h4 className="pokemon-id">{`#${id}`}</h4>
+              </Item.Header>
+              {id ? (<Image src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} size='medium' centered alt={name} />) : ''}
 
-          <span className="above-poke-tabs"></span>
-          <div className="pokemon-tabs-wrapper">
-            <Container>
-              <div className="pokemon-tabs">
-                <Type types={types} />
+              <span className="above-poke-tabs"></span>
+              <div className="pokemon-tabs-wrapper">
+                <Container>
+                  <div className="pokemon-tabs">
+                    <Type types={types} />
 
-                <Description species={props.species} />
-                <Profile details={props.data} species={props.species} />
-                <Stats stats={stats} />
+                    <Description species={props.species} />
+                    <Profile details={props.data} species={props.species} />
+                    <Stats stats={stats} />
 
-                <Species species={props.species} />
+                    <Species species={props.species} />
+                  </div>
+                </Container>
               </div>
-            </Container>
-          </div>
+            </React.Fragment>
+          )}
         </InnerPokemonInfo>
       </div>
 
