@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import axios from 'axios'
 import PokemonInfo from "./PokemonInfo";
-import { Container, Grid, Message, Button } from 'semantic-ui-react'
+import { Container, Grid, Message, Button, Dimmer, Loader } from 'semantic-ui-react'
 import { removeHyphen } from '../utils/helpers'
 import styled from 'styled-components'
 
@@ -61,6 +61,8 @@ const PokemonViewStyles = styled.div`
 `;
 
 const PokemonsSelector = (props) => {
+  const [loading, setLoading] = useState(true);
+  const [pokemonLoading, setPokemonLoading] = useState(true)
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonURL, setPokemonURL] = useState();
   const [pokemonData, setPokemonData] = useState(null);
@@ -68,12 +70,14 @@ const PokemonsSelector = (props) => {
 
   useEffect(() => {
     fetchAllPokemonData();
+    fetchPokemonData();
     fetchPokemonSpecies();
   })
 
   const fetchAllPokemonData = () => {
     axios.get(`${props.url}/pokemon/?limit=151`)
       .then(function (response) {
+        setLoading(false);
         setPokemonList(response.data.results);
       })
       .catch(function (error) {
@@ -97,7 +101,7 @@ const PokemonsSelector = (props) => {
     if (url) {
       axios.get(url || pokemonURL)
         .then(function (response) {
-          console.log(url);
+          setPokemonLoading(false);
           setPokemonData(response.data);
         })
         .catch(function (error) {
@@ -111,7 +115,7 @@ const PokemonsSelector = (props) => {
       <Grid.Row columns={1}>
         <Grid.Column>
           <PokemonStyles>
-            {pokemonData ? (
+            {!pokemonData ? '' : (
               <PokemonViewStyles>
                 <Button
                   className="close-view"
@@ -119,27 +123,29 @@ const PokemonsSelector = (props) => {
                     setPokemonData(null);
                   }}
                 >go back</Button>
-                <PokemonInfo data={pokemonData} species={pokemonSpecies} />
+                {pokemonLoading ?
+                  <Dimmer active inverted>
+                    <Loader inverted>Loading</Loader>
+                  </Dimmer>
+                  : <PokemonInfo data={pokemonData} species={pokemonSpecies} />
+                }
               </PokemonViewStyles>
-            ) : (
-                <Message>
-                  <p>Choose a pokemon to view details</p>
-                </Message>
-              )}
+            )}
 
             <Container>
               <PokeButtonGrid>
-                {pokemonList.map((pokemon, i) =>
-                  <Button className="poke-buttons"
-                    key={i}
-                    onClick={() => {
-                      setPokemonURL(pokemon.url);
-                      fetchPokemonData(pokemon.url);
-                      fetchPokemonSpecies(i + 1);
-                    }}
-                  ><img src={`https://pokeres.bastionbot.org/images/pokemon/${i + 1}.png`} alt={removeHyphen(pokemon.name)} /> {removeHyphen(pokemon.name)}
-                  </Button>
-                )}
+                {loading ? <Dimmer active inverted><Loader inverted>Loading</Loader></Dimmer> :
+                  pokemonList.map((pokemon, i) =>
+                    <Button className="poke-buttons"
+                      key={i}
+                      onClick={() => {
+                        setPokemonURL(pokemon.url);
+                        fetchPokemonData(pokemon.url);
+                        fetchPokemonSpecies(i + 1);
+                      }}
+                    ><img src={`https://pokeres.bastionbot.org/images/pokemon/${i + 1}.png`} alt={removeHyphen(pokemon.name)} /> {removeHyphen(pokemon.name)}
+                    </Button>
+                  )}
               </PokeButtonGrid>
             </Container>
           </PokemonStyles>

@@ -17,14 +17,25 @@ const StatsProgress = styled.div`
     }
   }
 
+  .stat-bar {
+    display: flex;
+  }
+
   .statName {
     text-transform: capitalize;
     font-weight: bold;
+    flex: 0 0 30%;
+
+    @media (min-width: 768px) {
+      text-align: right;
+      margin-right: 15px;
+    }
   }
 
   .progress {
     background: transparent;
     margin: 5px auto !important;
+    flex: 0 0 70%;
 
     .bar > .progress {
       top: 10%;
@@ -44,7 +55,7 @@ export default function PokemonStats(props) {
         <h2>Base stats</h2>
       </div>
       {stats.map((stat, index) => (
-        <div key={index}>
+        <div key={index} className="stat-bar">
           <span className="statName">{removeHyphen(stat.stat.name)}</span>
           <Progress indicating progress='value' value={stat.base_stat} />
 

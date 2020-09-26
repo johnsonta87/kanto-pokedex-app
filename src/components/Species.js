@@ -14,17 +14,6 @@ export default function Species(props) {
 
   return (
     <SpeciesStyles>
-
-      <div className="species-details evolution">
-        <div className="detail-header">
-          <h2>Evolution</h2>
-        </div>
-
-        <div className="pokemon-profile-row">
-          <p>Next evolution at <strong>level 16</strong> into <strong>NAME</strong>.</p>
-        </div>
-      </div>
-
       <div className="species-details evolution">
         <div className="detail-header">
           <h2>Evolution</h2>
