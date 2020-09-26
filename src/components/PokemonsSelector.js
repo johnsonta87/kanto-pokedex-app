@@ -42,6 +42,7 @@ const PokeButtonGrid = styled.div`
   padding: 25px 15px;
   height: 500px;
   overflow-y: scroll;
+  margin-top: 40px;
 `;
 
 const PokemonViewStyles = styled.div`
@@ -70,8 +71,6 @@ const PokemonsSelector = (props) => {
 
   useEffect(() => {
     fetchAllPokemonData();
-    fetchPokemonData();
-    fetchPokemonSpecies();
   })
 
   const fetchAllPokemonData = () => {
@@ -89,6 +88,7 @@ const PokemonsSelector = (props) => {
     if (id) {
       axios.get(`${props.url}/pokemon-species/${id}`)
         .then(function (response) {
+          setPokemonLoading(false);
           setPokemonSpecies(response.data);
         })
         .catch(function (error) {
@@ -99,7 +99,7 @@ const PokemonsSelector = (props) => {
 
   const fetchPokemonData = (url) => {
     if (url) {
-      axios.get(url || pokemonURL)
+      axios.get(url)
         .then(function (response) {
           setPokemonLoading(false);
           setPokemonData(response.data);
