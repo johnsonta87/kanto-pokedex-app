@@ -1,5 +1,6 @@
 import React from "react"
 import 'semantic-ui-css/semantic.min.css'
+import { Grid } from 'semantic-ui-react'
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -9,9 +10,11 @@ const App = () => {
 
   return (
     <Layout>
-      <SEO title="Hello" />
+      <SEO title="App" />
 
-      <PokemonsSelector url="https://pokeapi.co/api/v2" />
+      <Grid.Column>
+        <PokemonsSelector />
+      </Grid.Column>
     </Layout>
   )
 }

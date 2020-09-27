@@ -24,6 +24,10 @@
   -moz-border-radius-topright: 25px;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
+  background: rgb(255, 239, 213);
+  -webkit-box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.25);
 
   @media (max-width: 767px) {
     max-width: 90%;
@@ -40,7 +44,10 @@
   margin: 0 auto;
   position: relative;
   padding: 0 25px 50px;
-  background-color: #fff;
+  background: rgb(255, 239, 213);
+  -webkit-box-shadow: 0px 25px 25px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 25px 25px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 25px 25px 0px rgba(0, 0, 0, 0.25);
 }
 
 .detail-header {
@@ -49,11 +56,11 @@
   width: 100%;
   display: block;
   margin-bottom: 15px;
-  border-radius: 25px;
-  -webkit-border-radius: 25px;
-  -moz-border-radius: 25px;
-  -ms-border-radius: 25px;
-  -o-border-radius: 25px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 
   h2 {
     font-size: 1.25rem;

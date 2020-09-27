@@ -8,6 +8,7 @@ import Species from './Species'
 import Description from './Description'
 
 const SinglePokemonStyles = styled.div`
+  position: relative;
   .header {
     display: flex;
     justify-content: space-between;
@@ -53,7 +54,8 @@ export default function PokemonInfo(props) {
     id,
     name,
     types,
-    stats
+    stats,
+    species
   } = props.data;
 
   return (
@@ -84,7 +86,7 @@ export default function PokemonInfo(props) {
                     <Profile details={props.data} species={props.species} />
                     <Stats stats={stats} />
 
-                    <Species species={props.species} />
+                    <Species species={species} />
                   </div>
                 </Container>
               </div>

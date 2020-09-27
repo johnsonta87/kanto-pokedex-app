@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react"
-import axios from 'axios'
 import PokemonInfo from "./PokemonInfo";
-import { Container, Grid, Message, Button, Dimmer, Loader } from 'semantic-ui-react'
+import { Container, Button, Dimmer, Loader } from 'semantic-ui-react'
 import { removeHyphen } from '../utils/helpers'
 import styled from 'styled-components'
+
+import { fetchAllPokemonData, fetchPokemonSpecies, fetchPokemonData } from '../api/services'
 
 const PokemonStyles = styled.div`
   .poke-buttons {
@@ -48,101 +49,82 @@ const PokeButtonGrid = styled.div`
 const PokemonViewStyles = styled.div`
   width: 100%;
   position: absolute;
-  top: 0;
+  top: 75px;
   left: 0;
   right: 0;
   height: 100%;
 `;
 
-const PokemonsSelector = (props) => {
-  const [loading, setLoading] = useState(true);
+const PokemonsSelector = () => {
+  const [appLoading, setAppLoading] = useState(true);
   const [pokemonLoading, setPokemonLoading] = useState(true);
   const [pokemonList, setPokemonList] = useState([]);
-  const [pokemonURL, setPokemonURL] = useState();
   const [pokemonData, setPokemonData] = useState(null);
   const [pokemonSpecies, setPokemonSpecies] = useState([]);
 
   useEffect(() => {
-    fetchAllPokemonData();
-  })
-
-  const fetchAllPokemonData = () => {
-    axios.get(`${props.url}/pokemon/?limit=151`)
-      .then(function (response) {
-        setLoading(false);
-        setPokemonList(response.data.results);
-      })
-      .catch(function (error) {
-        console.log('Sorry, Error! ' + error);
-      });
-  }
-
-  const fetchPokemonSpecies = (id) => {
-    if (id) {
-      axios.get(`${props.url}/pokemon-species/${id}`)
-        .then(function (response) {
-          setPokemonLoading(false);
-          setPokemonSpecies(response.data);
-        })
-        .catch(function (error) {
-          console.log('Sorry, Error! ' + error);
-        });
-    }
-  }
-
-  const fetchPokemonData = (url) => {
-    if (url) {
-      axios.get(url || pokemonURL)
-        .then(function (response) {
-          setPokemonLoading(false);
-          setPokemonData(response.data);
-        })
-        .catch(function (error) {
-          console.log('Sorry, Error! ' + error);
-        });
-    }
-  }
+    fetchAllPokemonData().then(res => {
+      setAppLoading(false);
+      setPokemonList(res.data.results);
+    }).catch(error => {
+      console.log(error)
+    });
+  });
 
   return (
-    <Grid>
-      <Grid.Row columns={1}>
-        <Grid.Column>
-          <PokemonStyles>
-            {!pokemonData ? '' : (
-              <PokemonViewStyles>
-                <Button
-                  className="close-view"
-                  onClick={() => {
-                    setPokemonData(null);
-                  }}
-                  title="Go back"
-                ></Button>
-                {pokemonLoading ? <Dimmer active inverted><Loader inverted>Loading</Loader></Dimmer> : (
-                  <PokemonInfo data={pokemonData} species={pokemonSpecies} loading={pokemonLoading} />
-                )}
-              </PokemonViewStyles>
-            )}
+    <PokemonStyles>
+      {pokemonData ? (
+        <PokemonViewStyles>
+          <Button
+            className="close-view"
+            onClick={() => {
+              setPokemonData(null);
+            }}
+            title="Go back"
+          ></Button>
+          {pokemonLoading ? <Dimmer active inverted><Loader inverted>Loading</Loader></Dimmer> : (
+            <PokemonInfo data={pokemonData} species={pokemonSpecies} loading={pokemonLoading} />
+          )}
+        </PokemonViewStyles>
+      ) : ''}
 
-            <Container>
-              <PokeButtonGrid>
-                {loading ? <Dimmer active inverted><Loader inverted>Loading</Loader></Dimmer> :
-                  pokemonList.map((pokemon, i) =>
-                    <Button className="poke-buttons"
-                      key={i}
-                      onClick={() => {
-                        setPokemonURL(pokemon.url);
-                        fetchPokemonData(pokemon.url);
-                        fetchPokemonSpecies(i + 1);
-                      }}
-                    ><img src={`https://pokeres.bastionbot.org/images/pokemon/${i + 1}.png`} alt={removeHyphen(pokemon.name)} /> {removeHyphen(pokemon.name)}
-                    </Button>
-                  )}
-              </PokeButtonGrid>
-            </Container>
-          </PokemonStyles>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid >
+      <Container>
+        <PokeButtonGrid>
+          {appLoading ? <Dimmer active inverted><Loader inverted>Loading</Loader></Dimmer> :
+            pokemonList.map((pokemon, i) =>
+              <Button className="poke-buttons"
+                key={i}
+                onClick={() => {
+                  // Handle profile data
+                  if (pokemon.url) {
+                    fetchPokemonData(pokemon.url)
+                      .then((response) => {
+                        setPokemonLoading(false);
+                        setPokemonData(response.data);
+                      })
+                      .catch((error) => {
+                        console.log('Sorry, Error! ' + error);
+                      });
+                  }
+
+                  // Handle species data
+                  if (i > 0) {
+                    fetchPokemonSpecies(i + 1)
+                      .then((response) => {
+                        setPokemonLoading(false);
+                        setPokemonSpecies(response.data);
+                      })
+                      .catch((error) => {
+                        console.log('Sorry, Error! ' + error);
+                      });
+                  }
+                }}
+              ><img src={`https://pokeres.bastionbot.org/images/pokemon/${i + 1}.png`} alt={removeHyphen(pokemon.name)} /> {removeHyphen(pokemon.name)}
+              </Button>
+            )}
+        </PokeButtonGrid>
+      </Container>
+    </PokemonStyles>
   )
 }
 

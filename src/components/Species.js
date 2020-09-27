@@ -1,26 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { removeHyphen } from '../utils/helpers'
+import { fetchPokemonData } from '../api/services'
+import Evolution from './Evolution'
 
 const SpeciesStyles = styled.div`
 `;
 
 export default function Species(props) {
-  const {
-    egg_groups,
-    evolution_chain,
-    evolves_from_species,
-  } = props.species;
+  const [pokemonSpecies, setPokemonEvolution] = useState();
+  const { name, url } = props.species;
+
+  useEffect(() => {
+    if (url) {
+      fetchPokemonData(url)
+        .then((response) => {
+          setPokemonEvolution(response.data.evolution_chain.url);
+        })
+        .catch((error) => {
+          console.log('Sorry, Error! ' + error);
+        });
+    }
+  })
 
   return (
     <SpeciesStyles>
       <div className="species-details evolution">
-        <div className="detail-header">
-          <h2>Evolution</h2>
-        </div>
-
         <div className="pokemon-profile-row">
-          <p>Next evolution at <strong>level 16</strong> into <strong>NAME</strong>.</p>
+          {pokemonSpecies ? <Evolution evolutionChain={url} name={name} /> : <p>No further evolution.</p>}
         </div>
       </div>
     </SpeciesStyles>
