@@ -78,6 +78,8 @@ const PokemonsSelector = () => {
           <Button
             className="close-view"
             onClick={() => {
+              // reset states
+              setPokemonLoading(true);
               setPokemonData(null);
               setPokemonSpecies([]);
             }}

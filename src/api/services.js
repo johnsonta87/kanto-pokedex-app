@@ -1,23 +1,47 @@
 import API from './api'
 
-export function fetchAllPokemonData() {
-  return API.get(`/pokemon/?limit=151`);
-}
-
-export function fetchPokemonSpecies(id) {
-  if (id) {
-    return API.get(`/pokemon-species/${id}`);
+export const fetchAllPokemonData = async () => {
+  try {
+    const data = await API.get(`/pokemon/?limit=151`);
+    return data;
+  }
+  catch (e) {
+    console.log('We have the error in services', e);
   }
 }
 
-export function fetchPokemonEvolution(url) {
-  if (url) {
-    return API.get(url);
+export const fetchPokemonSpecies = async (id) => {
+  try {
+    if (id) {
+      const data = await API.get(`/pokemon-species/${id}`);
+      return data;
+    }
+  }
+  catch (e) {
+    console.log('We have the error in services', e);
   }
 }
 
-export function fetchPokemonData(url) {
-  if (url) {
-    return API.get(url);
+export const fetchPokemonEvolution = async (url) => {
+  try {
+    if (url) {
+      const data = await API.get(url);
+      return data;
+    }
+  }
+  catch (e) {
+    console.log('We have the error in services', e);
+  }
+}
+
+export const fetchPokemonData = async (url) => {
+  try {
+    if (url) {
+      const data = await API.get(url);
+      return data;
+    }
+  }
+  catch (e) {
+    console.log('We have the error in services', e);
   }
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { fetchPokemonData, fetchPokemonEvolution } from '../api/services'
 import LevelvsStone from '../components/LevelvsStone'
-import { Dimmer, Loader } from 'semantic-ui-react'
+import { Loader } from 'semantic-ui-react'
 
 const SpeciesStyles = styled.div`
   position: relative;
@@ -30,8 +30,8 @@ export default function Species(props) {
       if (speciesURL) {
         fetchPokemonEvolution(speciesURL)
           .then((response) => {
-            setLoading(false);
             setPokemonEvolution(response.data.chain);
+            setLoading(false);
           })
           .catch((error) => {
             console.log('Sorry, Error! ' + error);
@@ -44,21 +44,20 @@ export default function Species(props) {
     <SpeciesStyles>
       <div className="species-details evolution">
         <div className="detail-header">
-          <h2>Evolution Chain</h2>
+          <h2>Next Evolution</h2>
         </div>
 
         {loading ? <Loader active /> : (
           <div className="pokemon-profile-row">
-            {evolution_chain && evolution_chain.species.name === props.name ? <LevelvsStone chain={evolution_chain} /> : ''}
-
-            {evolution_chain && evolution_chain.evolves_to.filter((item) => (
-              item.species.name === props.name
-            )).map((chain_2, i) => chain_2.evolves_to[0] ? <LevelvsStone key={i} chain={chain_2} /> : 'No further evolution.')}
-
-            {evolution_chain && evolution_chain.evolves_to[0].evolves_to.filter((item) => (
-              item.species.name === props.name
-            )).map((i) => <p key={i}>No further evolution.</p>)
+            {evolution_chain.evolves_to.length > 0
+              ? evolution_chain && evolution_chain.species.name === props.name
+                ? <LevelvsStone chain={evolution_chain} />
+                : evolution_chain.evolves_to.length > 0 && evolution_chain.evolves_to.filter((item) => (
+                  item.species.name === props.name
+                )).map((chain_2, i) => chain_2.evolves_to && chain_2.evolves_to.length > 0 ? <LevelvsStone key={i} chain={chain_2} /> : 'No further evolution.')
+              : 'No further evolution.'
             }
+
           </div>
         )}
       </div>
