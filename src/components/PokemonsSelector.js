@@ -79,6 +79,7 @@ const PokemonsSelector = () => {
             className="close-view"
             onClick={() => {
               setPokemonData(null);
+              setPokemonSpecies([]);
             }}
             title="Go back"
           ></Button>

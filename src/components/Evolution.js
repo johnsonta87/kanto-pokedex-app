@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { fetchPokemonData, fetchPokemonEvolution } from '../api/services'
-import { capitalize } from '../utils/helpers'
+import LevelvsStone from '../components/LevelvsStone'
 
 const SpeciesStyles = styled.div`
 `;
@@ -24,7 +24,7 @@ export default function Species(props) {
       if (speciesURL) {
         fetchPokemonEvolution(speciesURL)
           .then((response) => {
-            setPokemonEvolution(response.data.chain.evolves_to);
+            setPokemonEvolution(response.data.chain);
           })
           .catch((error) => {
             console.log('Sorry, Error! ' + error);
@@ -37,13 +37,19 @@ export default function Species(props) {
     <SpeciesStyles>
       <div className="species-details evolution">
         <div className="detail-header">
-          <h2>Evolution</h2>
+          <h2>Evolution Chain</h2>
         </div>
 
         <div className="pokemon-profile-row">
-          {evolution_chain && evolution_chain.map((chain, i) => (
-            <p key={i}>Next evolution is <strong>{capitalize(chain.species.name)}</strong> at <strong>level 16</strong></p>
-          ))}
+          {evolution_chain && evolution_chain.species.name === props.name ? <LevelvsStone chain={evolution_chain} /> : ''}
+
+          {evolution_chain && evolution_chain.evolves_to.filter((item) => (
+            item.species.name === props.name
+          )).map((chain_2, i) => chain_2.evolves_to[0] ? <LevelvsStone key={i} chain={chain_2} /> : 'No further evolution.')}
+
+          {evolution_chain && evolution_chain.evolves_to[0].evolves_to.filter((item) => (
+            item.species.name === props.name
+          )).map((i) => <p key={i}>No further evolution.</p>)}
         </div>
       </div>
     </SpeciesStyles>

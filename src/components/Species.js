@@ -24,11 +24,13 @@ export default function Species(props) {
 
   return (
     <SpeciesStyles>
-      <div className="species-details evolution">
-        <div className="pokemon-profile-row">
-          {pokemonSpecies ? <Evolution evolutionChain={url} name={name} /> : <p>No further evolution.</p>}
+      {pokemonSpecies ? (
+        <div className="species-details evolution">
+          <div className="pokemon-profile-row">
+            <Evolution evolutionChain={url} name={name} />
+          </div>
         </div>
-      </div>
+      ) : ''}
     </SpeciesStyles>
   )
 }
